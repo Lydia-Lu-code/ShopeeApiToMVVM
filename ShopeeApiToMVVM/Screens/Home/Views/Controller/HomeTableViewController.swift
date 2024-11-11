@@ -65,14 +65,7 @@ class HomeTableViewController: UITableViewController {
         return view
     }()
     
-//    private let searchTextField: UITextField = {
-//        let textField = UITextField()
-//        textField.placeholder = "搜尋"
-//        textField.borderStyle = .roundedRect
-//        textField.backgroundColor = .systemGray6
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        return textField
-//    }()
+
     
     private let cartButton: UIButton = {
         let button = UIButton(type: .system)
@@ -131,6 +124,8 @@ class HomeTableViewController: UITableViewController {
             bottom: 10,
             right: 0
         )
+        
+        tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reuseIdentifier)
     }
     
     private func setupNavigationBar() {
@@ -195,68 +190,21 @@ class HomeTableViewController: UITableViewController {
         ])
     }
     
-//    private func setupSearchBar() {
-//        // 添加容器視圖
-//        view.addSubview(searchContainer)
+//    private func setupTableView() {
+//        // 基本設定
+//        tableView.backgroundColor = .systemBackground
+//        tableView.separatorStyle = .none
 //        
-//        // 添加元件到容器視圖
-//        searchContainer.addSubview(searchTextField)
-//        searchContainer.addSubview(cartButton)
-//        searchContainer.addSubview(chatButton)
+//        // 讓內容延伸到頂部
+//        tableView.contentInsetAdjustmentBehavior = .never
 //        
-//        // 設定容器視圖約束
-//        let window = UIApplication.shared.windows.first
-//        let topPadding = window?.safeAreaInsets.top ?? 0
+//        // 註冊 Cell
+//        tableView.register(BannerCell.self, forCellReuseIdentifier: BannerCell.reuseIdentifier)
 //        
-//        NSLayoutConstraint.activate([
-//            // 容器視圖約束 - 對齊螢幕邊緣
-//            searchContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding),
-//            searchContainer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-//            searchContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-//            searchContainer.heightAnchor.constraint(equalToConstant: 50),
-//            
-//            // 按鈕約束
-//            chatButton.widthAnchor.constraint(equalToConstant: 44),
-//            chatButton.heightAnchor.constraint(equalToConstant: 44),
-//            chatButton.trailingAnchor.constraint(equalTo: searchContainer.trailingAnchor, constant: -16), // 調整右邊距
-//            chatButton.centerYAnchor.constraint(equalTo: searchContainer.centerYAnchor),
-//            
-//            cartButton.widthAnchor.constraint(equalToConstant: 44),
-//            cartButton.heightAnchor.constraint(equalToConstant: 44),
-//            cartButton.trailingAnchor.constraint(equalTo: chatButton.leadingAnchor, constant: -10),
-//            cartButton.centerYAnchor.constraint(equalTo: searchContainer.centerYAnchor),
-//            
-//            // 搜尋框約束
-//            searchTextField.leadingAnchor.constraint(equalTo: searchContainer.leadingAnchor, constant: 16), // 調整左邊距
-//            searchTextField.trailingAnchor.constraint(equalTo: cartButton.leadingAnchor, constant: -10),
-//            searchTextField.centerYAnchor.constraint(equalTo: searchContainer.centerYAnchor),
-//            searchTextField.heightAnchor.constraint(equalToConstant: 36)
-//        ])
-//        
-//        // 調整 TableView 的位置
-//        tableView.contentInset = UIEdgeInsets(
-//            top: 50,
-//            left: 0,
-//            bottom: 10,
-//            right: 0
-//        )
+//        // 設定自動調整高度
+//        tableView.rowHeight = UITableView.automaticDimension
+////        tableView.estimatedRowHeight = 140
 //    }
-    
-    private func setupTableView() {
-        // 基本設定
-        tableView.backgroundColor = .systemBackground
-        tableView.separatorStyle = .none
-        
-        // 讓內容延伸到頂部
-        tableView.contentInsetAdjustmentBehavior = .never
-        
-        // 註冊 Cell
-        tableView.register(BannerCell.self, forCellReuseIdentifier: BannerCell.reuseIdentifier)
-        
-        // 設定自動調整高度
-        tableView.rowHeight = UITableView.automaticDimension
-//        tableView.estimatedRowHeight = 140
-    }
     
     private func bindViewModel() {
         viewModel.onDataUpdate = { [weak self] in
@@ -290,6 +238,18 @@ class HomeTableViewController: UITableViewController {
             present(alert, animated: true)
         }
     
+    private func setupTableView() {
+        tableView.backgroundColor = .systemBackground
+        tableView.separatorStyle = .none
+        tableView.contentInsetAdjustmentBehavior = .never
+        
+        // 註冊所有需要的 Cell
+        tableView.register(BannerCell.self, forCellReuseIdentifier: BannerCell.reuseIdentifier)
+        tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reuseIdentifier)
+        
+        tableView.rowHeight = UITableView.automaticDimension
+    }
+    
     // MARK: - UITableView 資料來源方法
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRows(in: section)
@@ -299,23 +259,91 @@ class HomeTableViewController: UITableViewController {
         return viewModel.numberOfSections()
     }
     
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        if indexPath.section == 0 {
+//            let cell = tableView.dequeueReusableCell(
+//                withIdentifier: BannerCell.reuseIdentifier,
+//                for: indexPath
+//            ) as! BannerCell
+//            cell.configure(with: viewModel.bannerItems)
+//            return cell
+//        } else {
+//            let cell = tableView.dequeueReusableCell(
+//                withIdentifier: CategoryTableViewCell.reuseIdentifier,
+//                for: indexPath
+//            ) as! CategoryTableViewCell
+//            cell.configure(with: viewModel.categories)
+//            return cell
+//        }
+//    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Section 0 是 Banner Section
-        if indexPath.section == 0 {
+        guard let section = HomeViewModel.Section(rawValue: indexPath.section) else {
+            return UITableViewCell()
+        }
+        
+        switch section {
+        case .banner:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: BannerCell.reuseIdentifier,
                 for: indexPath
             ) as! BannerCell
             cell.configure(with: viewModel.bannerItems)
             return cell
-        }
-        // Section 1 是 Products Section
-        else {
-            // 暫時使用基本的 UITableViewCell
-            let cell = UITableViewCell(style: .default, reuseIdentifier: "DefaultCell")
-            cell.textLabel?.text = "Product \(indexPath.row + 1)"
+            
+        case .category:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: CategoryTableViewCell.reuseIdentifier,
+                for: indexPath
+            ) as! CategoryTableViewCell
+            cell.configure(with: viewModel.categoryViewModel)
             return cell
         }
     }
+ 
+//    private func setupTableView() {
+//        tableView.backgroundColor = .systemBackground
+//        tableView.separatorStyle = .none
+//        tableView.contentInsetAdjustmentBehavior = .never
+//        
+//        // 註冊所有需要的 Cell
+//        tableView.register(BannerCell.self, forCellReuseIdentifier: BannerCell.reuseIdentifier)
+//        tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reuseIdentifier)
+//        
+//        tableView.rowHeight = UITableView.automaticDimension
+//    }
+
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == HomeViewModel.Section.banner.rawValue {
+            let width = tableView.bounds.width
+            let bannerHeight = width * (3.4 / 6.4) + 40
+            return bannerHeight
+        } else {
+            let width = tableView.bounds.width
+            let bannerHeight = width * (3.4 / 6.4) + 40
+            return bannerHeight * 1.2  // Category section 高度為 banner 的 1.2 倍
+        }
+    }
+    
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        // Section 0 是 Banner Section
+//        if indexPath.section == 0 {
+//            let cell = tableView.dequeueReusableCell(
+//                withIdentifier: BannerCell.reuseIdentifier,
+//                for: indexPath
+//            ) as! BannerCell
+//            cell.configure(with: viewModel.bannerItems)
+//            return cell
+//        }
+//        // Section 1 是 Products Section
+//        else {
+//            // 暫時使用基本的 UITableViewCell
+//            let cell = UITableViewCell(style: .default, reuseIdentifier: "DefaultCell")
+//            cell.textLabel?.text = "Product \(indexPath.row + 1)"
+//            return cell
+//        }
+//    }
+
 
 }
