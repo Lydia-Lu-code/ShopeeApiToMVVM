@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C0439772CE27A0200BF35C0 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0439762CE27A0200BF35C0 /* CustomNavBar.swift */; };
 		5C8120C32CE1E4D200848A85 /* CategoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120C22CE1E4D200848A85 /* CategoryItem.swift */; };
 		5C8120C52CE1E4FB00848A85 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120C42CE1E4FB00848A85 /* CategoryCollectionViewCell.swift */; };
 		5C8120C72CE1E53300848A85 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120C62CE1E53300848A85 /* CategoryTableViewCell.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C0439762CE27A0200BF35C0 /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
 		5C8120C22CE1E4D200848A85 /* CategoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryItem.swift; sourceTree = "<group>"; };
 		5C8120C42CE1E4FB00848A85 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C8120C62CE1E53300848A85 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				5CD90F842CDCC61000B9556C /* Controller */,
 				5CD90F852CDCC61B00B9556C /* Cell */,
+				5C0439762CE27A0200BF35C0 /* CustomNavBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				5CD90F8E2CDDCAE100B9556C /* NetworkError.swift in Sources */,
 				5C8120D12CE1FE9500848A85 /* LiveViewController.swift in Sources */,
 				5C8120C32CE1E4D200848A85 /* CategoryItem.swift in Sources */,
+				5C0439772CE27A0200BF35C0 /* CustomNavBar.swift in Sources */,
 				5C8120D62CE2076A00848A85 /* ShopHomeViewModel.swift in Sources */,
 				5CD90F6C2CDCBA4700B9556C /* SceneDelegate.swift in Sources */,
 				5CD90FCC2CDDDC4100B9556C /* BannerItemCell.swift in Sources */,

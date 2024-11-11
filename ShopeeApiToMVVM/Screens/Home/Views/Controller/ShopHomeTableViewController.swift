@@ -12,6 +12,7 @@ class ShopHomeTableViewController: UITableViewController {
     
     // MARK: - 屬性
     private let viewModel = ShopHomeViewModel()
+    private let customNavBar = CustomNavBar()
     
     private var dynamicIslandHeight: CGFloat {
         // 獲取視窗的安全區域頂部高度
@@ -19,18 +20,11 @@ class ShopHomeTableViewController: UITableViewController {
         return window?.safeAreaInsets.top ?? 0
     }
     
-    // MARK: - Custom Navbar Components
-    private let customNavBar: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private let searchBoxContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray6
+//        view.backgroundColor = .systemGray6
         view.layer.cornerRadius = 8
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -39,7 +33,7 @@ class ShopHomeTableViewController: UITableViewController {
         let textField = UITextField()
         textField.placeholder = "搜尋"
         textField.borderStyle = .none // 移除邊框樣式
-        textField.backgroundColor = .clear // 背景設為透明
+//        textField.backgroundColor = .white
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -49,6 +43,7 @@ class ShopHomeTableViewController: UITableViewController {
         let button = UIButton(type: .system)
         button.setTitle("🔍", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.backgroundColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -58,18 +53,10 @@ class ShopHomeTableViewController: UITableViewController {
         let button = UIButton(type: .system)
         button.setTitle("📸", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.backgroundColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-//    // MARK: - Properties
-//    private let searchContainer: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .clear
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-    
 
     
     private let cartButton: UIButton = {
@@ -107,11 +94,13 @@ class ShopHomeTableViewController: UITableViewController {
         // 先設置 searchBar，因為它會影響 tableView 的位置
 //        setupSearchBar()
         setupCustomNavBar()
-        setupNavigationBar()
+//        setupNavigationBar()
         setupTableView()
         bindViewModel()
         viewModel.fetchData()
         
+        customNavBar.backgroundColor = .clear
+
         // 調整 TableView 的內邊距
         tableView.contentInsetAdjustmentBehavior = .never // 關閉自動調整
         
@@ -134,29 +123,12 @@ class ShopHomeTableViewController: UITableViewController {
             right: 0
         )
         
-//        let window = UIApplication.shared.windows.first
-//        let topPadding = window?.safeAreaInsets.top ?? 0
-//        
-//        let searchBarHeight: CGFloat = 50
-//                tableView.contentInset = UIEdgeInsets(
-//                    top: topPadding - dynamicIslandHeight, // 使用安全區域的頂部間距
-//                    left: 0,
-//                    bottom: 10,
-//                    right: 0
-//                )
-//        
-//        // 設置滾動指示器的位置，避免被 searchContainer 遮擋
-//        tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
 
     
-    private func setupNavigationBar() {
-        // 隱藏導航欄
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
     private func setupCustomNavBar() {
+        
         view.addSubview(customNavBar)
         customNavBar.addSubview(searchBoxContainer)
         searchBoxContainer.addSubview(searchIconButton)
@@ -168,10 +140,9 @@ class ShopHomeTableViewController: UITableViewController {
         NSLayoutConstraint.activate([
             // Custom Navbar
             customNavBar.topAnchor.constraint(equalTo: view.topAnchor, constant: dynamicIslandHeight),
-            customNavBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            customNavBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+             customNavBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+             customNavBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             customNavBar.heightAnchor.constraint(equalToConstant: 50),
-
             
             // Search Box Container
             searchBoxContainer.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 16),
@@ -209,6 +180,33 @@ class ShopHomeTableViewController: UITableViewController {
             chatButton.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -16),
             chatButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor)
         ])
+        
+        // 設置回調
+           customNavBar.onSearchTextChanged = { [weak self] text in
+               // 處理搜尋文字變更
+               print("Search text changed: \(text)")
+           }
+           
+           customNavBar.onSearchButtonTapped = { [weak self] in
+               // 處理搜尋按鈕點擊
+               print("Search button tapped")
+           }
+           
+           customNavBar.onCameraButtonTapped = { [weak self] in
+               // 處理相機按鈕點擊
+               print("Camera button tapped")
+           }
+           
+           customNavBar.onCartButtonTapped = { [weak self] in
+               // 處理購物車按鈕點擊
+               print("Cart button tapped")
+           }
+           
+           customNavBar.onChatButtonTapped = { [weak self] in
+               // 處理聊天按鈕點擊
+               print("Chat button tapped")
+           }
+       
     }
     
 //    private func setupSearchBar() {
