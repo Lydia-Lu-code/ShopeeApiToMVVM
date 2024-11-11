@@ -55,6 +55,13 @@ class FeaturedProductCell: UITableViewCell {
         setupUI()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // 確保內容不會被裁剪
+        containerView.layoutIfNeeded()
+    }
+
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
