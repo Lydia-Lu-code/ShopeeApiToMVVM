@@ -11,7 +11,6 @@
 		5C8120C52CE1E4FB00848A85 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120C42CE1E4FB00848A85 /* CategoryCollectionViewCell.swift */; };
 		5C8120C72CE1E53300848A85 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120C62CE1E53300848A85 /* CategoryTableViewCell.swift */; };
 		5C8120C92CE1E78400848A85 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120C82CE1E78400848A85 /* CategoryViewModel.swift */; };
-		5C8120CB2CE1F9C800848A85 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120CA2CE1F9C800848A85 /* CustomNavigationBar.swift */; };
 		5C8120CD2CE1FB6500848A85 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120CC2CE1FB6500848A85 /* MainTabBarController.swift */; };
 		5C8120CF2CE1FE8300848A85 /* MallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120CE2CE1FE8300848A85 /* MallViewController.swift */; };
 		5C8120D12CE1FE9500848A85 /* LiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8120D02CE1FE9500848A85 /* LiveViewController.swift */; };
@@ -39,7 +38,6 @@
 		5C8120C42CE1E4FB00848A85 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C8120C62CE1E53300848A85 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		5C8120C82CE1E78400848A85 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
-		5C8120CA2CE1F9C800848A85 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		5C8120CC2CE1FB6500848A85 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		5C8120CE2CE1FE8300848A85 /* MallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MallViewController.swift; sourceTree = "<group>"; };
 		5C8120D02CE1FE9500848A85 /* LiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveViewController.swift; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 				5CD90F882CDCC6AB00B9556C /* FeaturedProductCell.swift */,
 				5C8120C42CE1E4FB00848A85 /* CategoryCollectionViewCell.swift */,
 				5C8120C62CE1E53300848A85 /* CategoryTableViewCell.swift */,
-				5C8120CA2CE1F9C800848A85 /* CustomNavigationBar.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -174,7 +171,7 @@
 		5CD90FC72CDDD85000B9556C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				5CD90FC82CDDD8B300B9556C /* ShopHome */,
+				5CD90FC82CDDD8B300B9556C /* Home */,
 				5C8120CC2CE1FB6500848A85 /* MainTabBarController.swift */,
 				5C8120CE2CE1FE8300848A85 /* MallViewController.swift */,
 				5C8120D02CE1FE9500848A85 /* LiveViewController.swift */,
@@ -184,14 +181,14 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
-		5CD90FC82CDDD8B300B9556C /* ShopHome */ = {
+		5CD90FC82CDDD8B300B9556C /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				5CD90F802CDCC5B400B9556C /* ViewModels */,
 				5CD90F832CDCC60400B9556C /* Views */,
 				5CD90FCF2CDDDC9200B9556C /* Models */,
 			);
-			path = ShopHome;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		5CD90FCF2CDDDC9200B9556C /* Models */ = {
@@ -289,7 +286,6 @@
 				5CD90F6A2CDCBA4700B9556C /* AppDelegate.swift in Sources */,
 				5C8120D32CE1FEA600848A85 /* NotificationViewController.swift in Sources */,
 				5CD90F872CDCC67800B9556C /* ProductCell.swift in Sources */,
-				5C8120CB2CE1F9C800848A85 /* CustomNavigationBar.swift in Sources */,
 				5C8120CD2CE1FB6500848A85 /* MainTabBarController.swift in Sources */,
 				5CD90F8E2CDDCAE100B9556C /* NetworkError.swift in Sources */,
 				5C8120D12CE1FE9500848A85 /* LiveViewController.swift in Sources */,
