@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HomeViewModel {    
+class ShopHomeViewModel {
     
     enum Section: Int, CaseIterable {
         case banner
