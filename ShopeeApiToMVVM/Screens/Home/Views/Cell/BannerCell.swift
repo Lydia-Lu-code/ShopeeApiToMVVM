@@ -41,41 +41,6 @@ class BannerCell: UITableViewCell {
         return pc
     }()
     
-//    private lazy var collectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//        layout.scrollDirection = .horizontal
-//        layout.minimumLineSpacing = 0
-//        layout.minimumInteritemSpacing = 0
-//        
-//        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        cv.backgroundColor = .clear
-//        cv.isPagingEnabled = true
-//        cv.showsHorizontalScrollIndicator = false
-//        cv.delegate = self
-//        cv.dataSource = self
-//        cv.register(BannerItemCell.self, forCellWithReuseIdentifier: BannerItemCell.reuseIdentifier)
-//        cv.translatesAutoresizingMaskIntoConstraints = false
-//        return cv
-//    }()
-//    
-//    private let pageControl: UIPageControl = {
-//        let pc = UIPageControl()
-//        pc.currentPageIndicatorTintColor = .systemRed
-//        pc.pageIndicatorTintColor = .systemGray4
-//        pc.translatesAutoresizingMaskIntoConstraints = false
-//        pc.hidesForSinglePage = false  // 不隱藏指示點
-//        
-//        // iOS 14 以上的額外設定
-//        if #available(iOS 14.0, *) {
-//            pc.backgroundStyle = .minimal
-//            pc.allowsContinuousInteraction = true
-//            
-//            // 調整點的大小
-//            pc.preferredIndicatorImage = UIImage(systemName: "circle.fill")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 4))
-//        }
-//        
-//        return pc
-//    }()
     
     // MARK: - 初始化
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -110,52 +75,6 @@ class BannerCell: UITableViewCell {
             pageControl.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor)
         ])
     }
-    
-    
-//    private func setupUI() {
-//        contentView.backgroundColor = .systemBackground
-//        selectionStyle = .none
-//        
-//        contentView.addSubview(collectionView)
-//        contentView.addSubview(pageControl)
-//        
-//        NSLayoutConstraint.activate([
-//            // CollectionView 約束保持不變
-//            collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
-//            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            collectionView.heightAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: aspectRatio),
-//            
-//            // 修改 PageControl 約束，使其底部對齊 collectionView
-//            pageControl.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
-//            pageControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            pageControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            pageControl.heightAnchor.constraint(equalToConstant: 20),
-//        ])
-//    }
-    
-//    private func setupUI() {
-//        contentView.backgroundColor = .systemBackground
-//        selectionStyle = .none
-//        
-//        contentView.addSubview(collectionView)
-//        contentView.addSubview(pageControl)
-//        
-//        NSLayoutConstraint.activate([
-//            // CollectionView 直接對齊 contentView 頂部，不加任何間距
-//            collectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-//            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            collectionView.heightAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: aspectRatio),
-//            
-//            // PageControl 的約束保持不變
-//            pageControl.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 8),
-//            pageControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            pageControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            pageControl.heightAnchor.constraint(equalToConstant: 20),
-//            pageControl.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-//        ])
-//    }
     
     // MARK: - 公開方法
     func configure(with items: [BannerItem]) {

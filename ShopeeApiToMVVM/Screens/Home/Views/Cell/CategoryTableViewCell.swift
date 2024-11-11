@@ -42,6 +42,7 @@ class CategoryTableViewCell: UITableViewCell {
         collectionView.register(CategoryCollectionViewCell.self,
                               forCellWithReuseIdentifier: CategoryCollectionViewCell.reuseIdentifier)
         
+        // 設定固定的上下邊距
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
@@ -49,6 +50,7 @@ class CategoryTableViewCell: UITableViewCell {
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
     }
+    
     
     func configure(with categories: [[CategoryItem]]) {
         self.categories = categories
@@ -65,6 +67,8 @@ class CategoryTableViewCell: UITableViewCell {
 
 // MARK: - UICollectionView DataSource & Delegate
 extension CategoryTableViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel?.numberOfSections ?? 0
@@ -86,15 +90,16 @@ extension CategoryTableViewCell: UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
     
-
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let totalWidth = collectionView.bounds.width
         let spacing: CGFloat = 10
-        let itemWidth = (totalWidth - spacing * 4) / 5 // 5個項目，4個間距
-        return CGSize(width: itemWidth, height: 60) // 高度包含emoji和文字
+        let totalWidth = collectionView.bounds.width
+        let itemWidth = (totalWidth - spacing * 4) / 5
+        let itemHeight = itemWidth + 20 // 保持之前的高度計算方式
+        
+        return CGSize(width: itemWidth, height: itemHeight)
     }
     
+    // 保持固定的間距
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
@@ -102,4 +107,5 @@ extension CategoryTableViewCell: UICollectionViewDataSource, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+
 }

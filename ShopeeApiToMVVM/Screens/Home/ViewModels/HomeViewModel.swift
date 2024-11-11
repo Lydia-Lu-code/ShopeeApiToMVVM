@@ -7,13 +7,7 @@
 
 import Foundation
 
-class HomeViewModel {
-//    // MARK: - 列舉
-//    enum Section: Int {
-//        case banner
-//        case products
-//    }
-    
+class HomeViewModel {    
     
     enum Section: Int, CaseIterable {
         case banner
@@ -47,23 +41,6 @@ class HomeViewModel {
         setupMockData()
     }
 
-//    private var categoryItems: [[CategoryItem]] = [
-//        [
-//            CategoryItem(emoji: "🛍️", title: "每日特賣"),
-//            CategoryItem(emoji: "🎮", title: "遊戲"),
-//            CategoryItem(emoji: "👕", title: "服飾"),
-//            CategoryItem(emoji: "📱", title: "手機"),
-//            CategoryItem(emoji: "💄", title: "美妝")
-//        ],
-//        [
-//            CategoryItem(emoji: "🏠", title: "居家"),
-//            CategoryItem(emoji: "📚", title: "書籍"),
-//            CategoryItem(emoji: "🎵", title: "音樂"),
-//            CategoryItem(emoji: "🖥️", title: "電腦"),
-//            CategoryItem(emoji: "🎁", title: "禮品")
-//        ]
-//        
-//    ]
 
     
     

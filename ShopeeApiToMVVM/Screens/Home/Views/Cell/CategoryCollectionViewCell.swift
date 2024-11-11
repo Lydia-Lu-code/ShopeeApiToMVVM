@@ -12,7 +12,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
     private let emojiLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 30)
+        label.font = .systemFont(ofSize: 35)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -20,7 +20,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 14)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -40,15 +40,17 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
-            emojiLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            // emoji 標籤置中
             emojiLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            emojiLabel.widthAnchor.constraint(equalToConstant: 40),
-            emojiLabel.heightAnchor.constraint(equalToConstant: 40),
+            emojiLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            emojiLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.8),
+            emojiLabel.heightAnchor.constraint(equalTo: emojiLabel.widthAnchor), // 保持正方形
             
-            titleLabel.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 4),
+            // 文字標籤
+            titleLabel.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 5),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            titleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -5)
         ])
     }
     
