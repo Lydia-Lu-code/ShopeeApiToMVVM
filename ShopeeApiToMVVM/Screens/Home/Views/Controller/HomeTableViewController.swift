@@ -121,30 +121,6 @@ class HomeTableViewController: UITableViewController {
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        setupNavigationBar()
-//        setupSearchBar()
-//        setupTableView()
-//        bindViewModel()
-//        viewModel.fetchData()
-//        
-//        // 調整 TableView 的內邊距
-//        tableView.contentInsetAdjustmentBehavior = .never // 關閉自動調整
-//        let window = UIApplication.shared.windows.first
-//        let topPadding = window?.safeAreaInsets.top ?? 0
-//        
-//        // 設定 TableView 的內邊距
-//        tableView.contentInset = UIEdgeInsets(
-//            top: topPadding - dynamicIslandHeight, // 使用安全區域的頂部間距
-//            left: 0,
-//            bottom: 10,
-//            right: 0
-//        )
-//        
-//        tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reuseIdentifier)
-//    }
     
     private func setupNavigationBar() {
         // 隱藏導航欄
