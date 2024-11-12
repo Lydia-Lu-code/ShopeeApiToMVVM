@@ -12,7 +12,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
     private let emojiLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 35)
+        label.font = .systemFont(ofSize: 40)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

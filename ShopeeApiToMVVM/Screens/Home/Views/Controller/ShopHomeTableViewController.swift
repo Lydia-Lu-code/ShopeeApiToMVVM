@@ -19,61 +19,6 @@ class ShopHomeTableViewController: UITableViewController {
         let window = UIApplication.shared.windows.first
         return window?.safeAreaInsets.top ?? 0
     }
-    
-    private let searchBoxContainer: UIView = {
-        let view = UIView()
-//        view.backgroundColor = .systemGray6
-        view.layer.cornerRadius = 8
-        view.backgroundColor = .clear
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let searchTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "搜尋"
-        textField.borderStyle = .none // 移除邊框樣式
-//        textField.backgroundColor = .white
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-    
-    // 新增搜尋框左側按鈕
-    private let searchIconButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("🔍", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
-        button.backgroundColor = .white
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    // 新增搜尋框右側按鈕
-    private let cameraButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("📸", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
-        button.backgroundColor = .white
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    
-    private let cartButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("🛒", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 24)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private let chatButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("💬", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 24)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
      
      // MARK: - 初始化
      override init(style: UITableView.Style = .plain) {
@@ -84,17 +29,12 @@ class ShopHomeTableViewController: UITableViewController {
          fatalError("init(coder:) has not been implemented")
      }
     
-
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         // 先設置 searchBar，因為它會影響 tableView 的位置
-//        setupSearchBar()
         setupCustomNavBar()
-//        setupNavigationBar()
         setupTableView()
         bindViewModel()
         viewModel.fetchData()
@@ -103,10 +43,9 @@ class ShopHomeTableViewController: UITableViewController {
 
         // 調整 TableView 的內邊距
         tableView.contentInsetAdjustmentBehavior = .never // 關閉自動調整
-        
-        let window = UIApplication.shared.windows.first
+
         let topPadding = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
-        
+
         // 調整 TableView 的內邊距，使其對齊動態島頂部
         tableView.contentInset = UIEdgeInsets(
             top: topPadding - dynamicIslandHeight,  // 負值使內容向上移動到動態島頂部
@@ -122,148 +61,46 @@ class ShopHomeTableViewController: UITableViewController {
             bottom: 10,
             right: 0
         )
-        
     }
-    
-
     
     private func setupCustomNavBar() {
         
         view.addSubview(customNavBar)
-        customNavBar.addSubview(searchBoxContainer)
-        searchBoxContainer.addSubview(searchIconButton)
-        searchBoxContainer.addSubview(searchTextField)
-        searchBoxContainer.addSubview(cameraButton)
-        customNavBar.addSubview(cartButton)
-        customNavBar.addSubview(chatButton)
-        
+
         NSLayoutConstraint.activate([
             // Custom Navbar
             customNavBar.topAnchor.constraint(equalTo: view.topAnchor, constant: dynamicIslandHeight),
-             customNavBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-             customNavBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            customNavBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            customNavBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             customNavBar.heightAnchor.constraint(equalToConstant: 50),
             
-            // Search Box Container
-            searchBoxContainer.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 16),
-            searchBoxContainer.trailingAnchor.constraint(equalTo: cartButton.leadingAnchor, constant: -10),
-            searchBoxContainer.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
-            searchBoxContainer.heightAnchor.constraint(equalToConstant: 36),
-            
-            // Search Icon
-            searchIconButton.leadingAnchor.constraint(equalTo: searchBoxContainer.leadingAnchor, constant: 8),
-            searchIconButton.centerYAnchor.constraint(equalTo: searchBoxContainer.centerYAnchor),
-            searchIconButton.widthAnchor.constraint(equalToConstant: 24),
-            searchIconButton.heightAnchor.constraint(equalToConstant: 24),
-            
-            // Camera Button
-            cameraButton.trailingAnchor.constraint(equalTo: searchBoxContainer.trailingAnchor, constant: -8),
-            cameraButton.centerYAnchor.constraint(equalTo: searchBoxContainer.centerYAnchor),
-            cameraButton.widthAnchor.constraint(equalToConstant: 24),
-            cameraButton.heightAnchor.constraint(equalToConstant: 24),
-            
-            // Search TextField
-            searchTextField.leadingAnchor.constraint(equalTo: searchIconButton.trailingAnchor, constant: 8),
-            searchTextField.trailingAnchor.constraint(equalTo: cameraButton.leadingAnchor, constant: -8),
-            searchTextField.topAnchor.constraint(equalTo: searchBoxContainer.topAnchor),
-            searchTextField.bottomAnchor.constraint(equalTo: searchBoxContainer.bottomAnchor),
-            
-            // Cart Button
-            cartButton.widthAnchor.constraint(equalToConstant: 44),
-            cartButton.heightAnchor.constraint(equalToConstant: 44),
-            cartButton.trailingAnchor.constraint(equalTo: chatButton.leadingAnchor, constant: -10),
-            cartButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
-            
-            // Chat Button
-            chatButton.widthAnchor.constraint(equalToConstant: 44),
-            chatButton.heightAnchor.constraint(equalToConstant: 44),
-            chatButton.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -16),
-            chatButton.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor)
         ])
         
-        // 設置回調
-           customNavBar.onSearchTextChanged = { [weak self] text in
-               // 處理搜尋文字變更
-               print("Search text changed: \(text)")
-           }
-           
-           customNavBar.onSearchButtonTapped = { [weak self] in
-               // 處理搜尋按鈕點擊
-               print("Search button tapped")
-           }
-           
-           customNavBar.onCameraButtonTapped = { [weak self] in
-               // 處理相機按鈕點擊
-               print("Camera button tapped")
-           }
-           
-           customNavBar.onCartButtonTapped = { [weak self] in
-               // 處理購物車按鈕點擊
-               print("Cart button tapped")
-           }
-           
-           customNavBar.onChatButtonTapped = { [weak self] in
-               // 處理聊天按鈕點擊
-               print("Chat button tapped")
-           }
-       
+        setupNavBarCallbacks()
     }
     
-//    private func setupSearchBar() {
-//        view.addSubview(searchContainer)
-//        searchContainer.addSubview(searchBoxContainer)
-//        searchBoxContainer.addSubview(searchIconButton)
-//        searchBoxContainer.addSubview(searchTextField)
-//        searchBoxContainer.addSubview(cameraButton)
-//        searchContainer.addSubview(cartButton)
-//        searchContainer.addSubview(chatButton)
-//        
-//        
-//        NSLayoutConstraint.activate([
-//            // 容器視圖約束
-//            searchContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: dynamicIslandHeight),
-//            searchContainer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-//            searchContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-//            searchContainer.heightAnchor.constraint(equalToConstant: 50),
-//            
-//            // 搜尋框容器約束
-//            searchBoxContainer.leadingAnchor.constraint(equalTo: searchContainer.leadingAnchor, constant: 16),
-//            searchBoxContainer.trailingAnchor.constraint(equalTo: cartButton.leadingAnchor, constant: -10),
-//            searchBoxContainer.centerYAnchor.constraint(equalTo: searchContainer.centerYAnchor),
-//            searchBoxContainer.heightAnchor.constraint(equalToConstant: 36),
-//            
-//            // 搜尋圖標按鈕約束
-//            searchIconButton.leadingAnchor.constraint(equalTo: searchBoxContainer.leadingAnchor, constant: 8),
-//            searchIconButton.centerYAnchor.constraint(equalTo: searchBoxContainer.centerYAnchor),
-//            searchIconButton.widthAnchor.constraint(equalToConstant: 24),
-//            searchIconButton.heightAnchor.constraint(equalToConstant: 24),
-//            
-//            // 相機按鈕約束
-//            cameraButton.trailingAnchor.constraint(equalTo: searchBoxContainer.trailingAnchor, constant: -8),
-//            cameraButton.centerYAnchor.constraint(equalTo: searchBoxContainer.centerYAnchor),
-//            cameraButton.widthAnchor.constraint(equalToConstant: 24),
-//            cameraButton.heightAnchor.constraint(equalToConstant: 24),
-//            
-//            // 搜尋框約束
-//            searchTextField.leadingAnchor.constraint(equalTo: searchIconButton.trailingAnchor, constant: 8),
-//            searchTextField.trailingAnchor.constraint(equalTo: cameraButton.leadingAnchor, constant: -8),
-//            searchTextField.topAnchor.constraint(equalTo: searchBoxContainer.topAnchor),
-//            searchTextField.bottomAnchor.constraint(equalTo: searchBoxContainer.bottomAnchor),
-//            
-//            // 購物車按鈕約束
-//            cartButton.widthAnchor.constraint(equalToConstant: 44),
-//            cartButton.heightAnchor.constraint(equalToConstant: 44),
-//            cartButton.trailingAnchor.constraint(equalTo: chatButton.leadingAnchor, constant: -10),
-//            cartButton.centerYAnchor.constraint(equalTo: searchContainer.centerYAnchor),
-//            
-//            // 聊天按鈕約束
-//            chatButton.widthAnchor.constraint(equalToConstant: 44),
-//            chatButton.heightAnchor.constraint(equalToConstant: 44),
-//            chatButton.trailingAnchor.constraint(equalTo: searchContainer.trailingAnchor, constant: -16),
-//            chatButton.centerYAnchor.constraint(equalTo: searchContainer.centerYAnchor)
-//        ])
-//    }
-
+    
+    private func setupNavBarCallbacks() {
+        customNavBar.onSearchTextChanged = { [weak self] text in
+            print("Search text changed: \(text)")
+        }
+        
+        customNavBar.onSearchButtonTapped = { [weak self] in
+            print("Search button tapped")
+        }
+        
+        customNavBar.onCameraButtonTapped = { [weak self] in
+            print("Camera button tapped")
+        }
+        
+        customNavBar.onCartButtonTapped = { [weak self] in
+            print("Cart button tapped")
+        }
+        
+        customNavBar.onChatButtonTapped = { [weak self] in
+            print("Chat button tapped")
+        }
+    }
     
     private func bindViewModel() {
         viewModel.onDataUpdate = { [weak self] in
@@ -305,6 +142,9 @@ class ShopHomeTableViewController: UITableViewController {
         // 註冊所有需要的 Cell
         tableView.register(BannerCell.self, forCellReuseIdentifier: BannerCell.reuseIdentifier)
         tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reuseIdentifier)
+        tableView.register(FlashSaleCell.self, forCellReuseIdentifier: FlashSaleCell.reuseIdentifier)
+        tableView.register(CouponCell.self, forCellReuseIdentifier: CouponCell.reuseIdentifier)
+
         
         tableView.rowHeight = UITableView.automaticDimension
     }
@@ -333,6 +173,8 @@ class ShopHomeTableViewController: UITableViewController {
             cell.configure(with: viewModel.bannerItems)
             return cell
             
+
+            
         case .category:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: CategoryTableViewCell.reuseIdentifier,
@@ -341,6 +183,36 @@ class ShopHomeTableViewController: UITableViewController {
             cell.configure(with: viewModel.categoryViewModel)
             cell.backgroundColor = .systemOrange
             return cell
+            
+        case .flashSale:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: FlashSaleCell.reuseIdentifier,
+                for: indexPath
+            ) as! FlashSaleCell
+            cell.configure(with: viewModel.flashSaleViewModel)
+            
+            cell.onFirstButtonTapped = {
+                print("First button tapped")
+            }
+            cell.onSecondButtonTapped = {
+                print("Second button tapped")
+            }
+            cell.onThirdButtonTapped = {
+                print("Third button tapped")
+            }
+            return cell
+            
+        case .coupon:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: CouponCell.reuseIdentifier,
+                for: indexPath
+            ) as! CouponCell
+            cell.configure(with: viewModel.couponViewModel)
+            cell.onCouponButtonTapped = {
+                print("Coupon button tapped")
+            }
+            return cell
+        
         }
     }
  
@@ -351,23 +223,39 @@ class ShopHomeTableViewController: UITableViewController {
             return 0
         }
         
+        // 基準寬度和計算比例
+        let screenWidth = tableView.bounds.width
+        let bannerRatio: CGFloat = 3.4 / 6.4
+        let baseBannerHeight = screenWidth * bannerRatio
+        
         switch section {
         case .banner:
-            let width = tableView.bounds.width
-            return width * (3.4 / 6.4) + 40
+            return baseBannerHeight
+            
         case .category:
-            // 計算單個 CollectionViewCell 的高度
-            let spacing: CGFloat = 10 // Cell 之間的間距
-            let totalWidth = tableView.bounds.width - 20 // 減去左右邊距
-            let itemWidth = (totalWidth - spacing * 4) / 5
-            let itemHeight = itemWidth + 20 // CollectionViewCell 的高度
+            // Category Cell 計算參數
+            let spacing: CGFloat = 5
+            let sideMargin: CGFloat = 15
+            let labelHeight: CGFloat = 15
             
-            // 計算兩行的總高度：
-            // (單個 Cell 高度 × 2) + 中間間距 + 上下邊距
-            let totalHeight = (itemHeight * 2) + spacing + 20 // 20 是上下邊距總和
+            // 計算單個 item 的尺寸
+            let availableWidth = screenWidth - sideMargin
+            let itemWidth = (availableWidth - spacing * 4) / 5
+            let itemHeight = itemWidth + labelHeight
             
+            // 計算總高度（兩行）
+            let rowSpacing: CGFloat = 5
+            let totalHeight = (itemHeight * 2) + rowSpacing + spacing
             return totalHeight
+            
+        case .flashSale:
+            return baseBannerHeight * 0.65
+            
+        case .coupon:
+            return baseBannerHeight * 0.8
         }
+        
+
     }
  
 

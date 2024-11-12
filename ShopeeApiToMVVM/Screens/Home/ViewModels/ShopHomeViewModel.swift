@@ -1,23 +1,22 @@
-//
-//  HomeViewModel.swift
-//  ShopeeApiToMVVM
-//
-//  Created by Lydia Lu on 2024/11/7.
-//
-
 import Foundation
 
 class ShopHomeViewModel {
     
     enum Section: Int, CaseIterable {
         case banner
-        case category  // 添加 category section
+        case category
+        case flashSale
+        case coupon
+        
+        
     }
     
     // MARK: - 屬性
     private var products: [Product] = []
     private var banners: [BannerItem] = []
     private(set) var categoryViewModel: CategoryViewModel
+    private(set) var flashSaleViewModel: FlashSaleViewModel
+    private(set) var couponViewModel: CouponViewModel
     
     init() {
         let categoryItems: [[CategoryItem]] = [
@@ -38,25 +37,26 @@ class ShopHomeViewModel {
         ]
         
         self.categoryViewModel = CategoryViewModel(categories: categoryItems)
+        self.flashSaleViewModel = FlashSaleViewModel(
+            firstButtonTitle: "限時搶購",
+            secondButtonTitle: "商城優惠",
+            thirdButtonTitle: "品牌特賣"
+        )
+        self.couponViewModel = CouponViewModel(
+            title: "領取折價券",
+            backgroundColor: .systemPink
+        )
+        
         setupMockData()
     }
-
-
-    
-    
     
     var onDataUpdate: (() -> Void)?
     var onError: ((String) -> Void)?
-    
-
     
     // MARK: - 公開方法
     var bannerItems: [BannerItem] {
         return banners
     }
-    
-
-
     
     func numberOfSections() -> Int {
         return Section.allCases.count
@@ -65,25 +65,10 @@ class ShopHomeViewModel {
     func numberOfRows(in section: Int) -> Int {
         guard let section = Section(rawValue: section) else { return 0 }
         switch section {
-        case .banner:
-            return 1
-        case .category:
+        case .banner, .flashSale, .category, .coupon:
             return 1
         }
     }
-    
-//    func numberOfSections() -> Int {
-//        return 2 // Banner section + Products section
-//    }
-//
-//    func numberOfRows(in section: Int) -> Int {
-//        if section == 0 { // Banner section
-//            return 1
-//        } else { // Products section
-//            return products.count
-//        }
-//    }
-
     
     func product(at index: Int) -> Product {
         return products[index]
@@ -91,20 +76,16 @@ class ShopHomeViewModel {
     
     // 將 fetchProducts 改為公開方法
     func fetchProducts() {
-        // 模擬網路請求
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.onDataUpdate?()
         }
     }
     
-    // 同時提供一個通用的資料獲取方法
     func fetchData() {
         fetchProducts()
-        // 之後可以在這裡加入獲取 banner 的邏輯
     }
     
     private func setupMockData() {
-        // Banner 測試資料
         banners = (1...13).map { index in
             BannerItem(
                 id: index,
@@ -114,10 +95,9 @@ class ShopHomeViewModel {
             )
         }
         
-        // 暫時清空商品資料
         products = []
     }
     
     
-    
 }
+
