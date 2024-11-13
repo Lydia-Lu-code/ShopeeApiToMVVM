@@ -5,17 +5,9 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setViewControllers()
-//        setupTabBarAppearance()
     }
     
-//    private func setupTabBarAppearance() {
-//        if #available(iOS 15.0, *) {
-//            let appearance = UITabBarAppearance()
-//            appearance.configureWithOpaqueBackground()
-//            tabBar.standardAppearance = appearance
-//            tabBar.scrollEdgeAppearance = appearance
-//        }
-//    }
+
     
     private func setViewControllers() {
         let homeVC = ShopHomeTableViewController()

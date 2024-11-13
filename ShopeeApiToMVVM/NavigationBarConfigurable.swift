@@ -16,6 +16,8 @@ protocol NavigationBarConfigurable {
 extension NavigationBarConfigurable where Self: UIViewController {
     func configureNavigationBarAppearance() {
         // 移除導航欄的預設外觀
+        // 可以加入高度設定
+                 navigationController?.navigationBar.frame.size.height = 24
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         
