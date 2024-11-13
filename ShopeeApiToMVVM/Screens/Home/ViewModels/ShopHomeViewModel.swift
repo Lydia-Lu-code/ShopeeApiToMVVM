@@ -1,6 +1,6 @@
 import Foundation
 
-class ShopHomeViewModel {
+class ShopHomeViewModel: BaseNavigationViewModel {
     
     enum Section: Int, CaseIterable {
         case banner
@@ -18,7 +18,7 @@ class ShopHomeViewModel {
     private(set) var flashSaleViewModel: FlashSaleViewModel
     private(set) var couponViewModel: CouponViewModel
     
-    init() {
+    override init() {
         let categoryItems: [[CategoryItem]] = [
             [
                 CategoryItem(emoji: "🛍️", title: "每日特賣"),
@@ -46,7 +46,7 @@ class ShopHomeViewModel {
             title: "領取折價券",
             backgroundColor: .systemPink
         )
-        
+        super.init()  // 加上這行，呼叫父類別的初始化方法
         setupMockData()
     }
     
