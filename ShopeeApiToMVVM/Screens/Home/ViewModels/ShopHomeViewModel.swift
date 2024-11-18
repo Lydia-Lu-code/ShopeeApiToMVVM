@@ -7,8 +7,8 @@ class ShopHomeViewModel: BaseNavigationViewModel {
         case category
         case flashSale
         case coupon
-        
-        
+        case brandSale
+
     }
     
     // MARK: - 屬性
@@ -17,6 +17,7 @@ class ShopHomeViewModel: BaseNavigationViewModel {
     private(set) var categoryViewModel: CategoryViewModel
     private(set) var flashSaleViewModel: FlashSaleViewModel
     private(set) var couponViewModel: CouponViewModel
+    private(set) var brandSaleViewModel: BrandSaleViewModel
     
     override init() {
         let categoryItems: [[CategoryItem]] = [
@@ -36,16 +37,31 @@ class ShopHomeViewModel: BaseNavigationViewModel {
             ]
         ]
         
+        let brandImages = (1...6).map { index in
+             BrandImageItem(
+                 imageUrl: "https://picsum.photos/120/120?random=\(index)",
+                 title: "品牌 \(index)"
+             )
+         }
+        
         self.categoryViewModel = CategoryViewModel(categories: categoryItems)
         self.flashSaleViewModel = FlashSaleViewModel(
             firstButtonTitle: "限時搶購",
             secondButtonTitle: "商城優惠",
             thirdButtonTitle: "品牌特賣"
         )
+        
         self.couponViewModel = CouponViewModel(
-            title: "領取折價券",
+            topButtonTitle: "領取折價券",  // 上面按鈕的標題
+            couponButtonTitle: "馬上領取",  // 下面按鈕的標題
             backgroundColor: .systemPink
         )
+
+        self.brandSaleViewModel = BrandSaleViewModel(
+            title: "品牌特殺",
+            brandImages: brandImages
+        )
+        
         super.init()  // 加上這行，呼叫父類別的初始化方法
         setupMockData()
     }
@@ -65,7 +81,7 @@ class ShopHomeViewModel: BaseNavigationViewModel {
     func numberOfRows(in section: Int) -> Int {
         guard let section = Section(rawValue: section) else { return 0 }
         switch section {
-        case .banner, .flashSale, .category, .coupon:
+        case .banner, .flashSale, .category, .coupon, .brandSale:
             return 1
         }
     }

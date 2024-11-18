@@ -75,7 +75,7 @@ class CustomNavBar: UIView {
         super.layoutSubviews()
         print("CustomNavBar - layoutSubviews bounds:", bounds)
         print("CustomNavBar - layoutSubviews frame:", frame)
-        transform = CGAffineTransform(translationX: 0, y: -50)
+        transform = CGAffineTransform(translationX: 0, y: -40)
     }
     
     

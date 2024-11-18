@@ -4,6 +4,9 @@ class ShopHomeTableViewController: UITableViewController, NavigationBarConfigura
     
     // MARK: - 屬性
     private let viewModel = ShopHomeViewModel()
+    private var overlayAdView: OverlayAdView!
+    private var overlayAdViewModel: OverlayAdViewModel!
+    
     
     private var dynamicIslandHeight: CGFloat {
         let window = UIApplication.shared.windows.first
@@ -35,6 +38,9 @@ class ShopHomeTableViewController: UITableViewController, NavigationBarConfigura
             bottom: 10,
             right: 0
         )
+        
+//        ﻿﻿廣告
+//        setupOverlayAd()
     }
     
     func setupNavBarCallbacks(for customNavBar: CustomNavBar) {
@@ -78,9 +84,67 @@ class ShopHomeTableViewController: UITableViewController, NavigationBarConfigura
         tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reuseIdentifier)
         tableView.register(FlashSaleCell.self, forCellReuseIdentifier: FlashSaleCell.reuseIdentifier)
         tableView.register(CouponCell.self, forCellReuseIdentifier: CouponCell.reuseIdentifier)
+        tableView.register(BrandSaleCell.self, forCellReuseIdentifier: BrandSaleCell.reuseIdentifier)
+
         
         tableView.rowHeight = UITableView.automaticDimension
     }
+    
+    private func setupOverlayAd() {
+        // 創建廣告視圖
+        overlayAdView = OverlayAdView(frame: view.bounds)
+        overlayAdView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(overlayAdView)
+        
+        // 創建 ViewModel
+        let adContent = OverlayAdViewModel.AdContent(
+            imageUrl: "your_ad_image_url",
+            targetUrl: "your_target_url"
+        )
+        
+        overlayAdViewModel = OverlayAdViewModel(
+            adContent: adContent,
+            initialDelay: 5.0,  // 5秒後首次顯示
+            repeatDelay: 15.0   // 關閉後15秒再次顯示
+        )
+        
+        // 設定廣告點擊事件
+        overlayAdViewModel.onAdTapped = { [weak self] in
+            // 處理廣告點擊
+            print("Ad tapped")
+        }
+        
+        // 配置廣告視圖
+        overlayAdView.configure(with: overlayAdViewModel)
+    }
+    
+    deinit {
+        overlayAdView.cleanup()
+    }
+    
+//    private func setupOverlayAd() {
+//        // 創建廣告視圖
+//        overlayAdView = OverlayAdView(frame: view.bounds)
+//        overlayAdView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        view.addSubview(overlayAdView)
+//        
+//        // 創建 ViewModel
+//        let adContent = OverlayAdViewModel.AdContent(
+//            imageUrl: "your_ad_image_url",
+//            targetUrl: "your_target_url"
+//        )
+//        
+//        overlayAdViewModel = OverlayAdViewModel(adContent: adContent)
+//        
+//        // 設定廣告點擊事件
+//        overlayAdViewModel.onAdTapped = { [weak self] in
+//            // 處理廣告點擊
+//            print("Ad tapped")
+//        }
+//        
+//        // 配置廣告視圖
+//        overlayAdView.configure(with: overlayAdViewModel)
+//    }
     
     // MARK: - UITableView 資料來源方法
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -111,7 +175,7 @@ class ShopHomeTableViewController: UITableViewController, NavigationBarConfigura
                 for: indexPath
             ) as! CategoryTableViewCell
             cell.configure(with: viewModel.categoryViewModel)
-            cell.backgroundColor = .systemOrange
+            cell.backgroundColor = .orange
             return cell
             
         case .flashSale:
@@ -141,6 +205,21 @@ class ShopHomeTableViewController: UITableViewController, NavigationBarConfigura
                 print("Coupon button tapped")
             }
             return cell
+            
+        case .brandSale:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: BrandSaleCell.reuseIdentifier,
+                for: indexPath
+            ) as! BrandSaleCell
+            cell.configure(with: viewModel.brandSaleViewModel)
+            viewModel.brandSaleViewModel.onBrandButtonTapped = {
+                print("Brand button tapped")
+            }
+            viewModel.brandSaleViewModel.onImageTapped = { index in
+                print("Brand image \(index) tapped")
+            }
+            return cell
+            
         }
     }
     
@@ -175,10 +254,13 @@ class ShopHomeTableViewController: UITableViewController, NavigationBarConfigura
             return totalHeight
             
         case .flashSale:
-            return baseBannerHeight * 0.65
+            return baseBannerHeight * 0.50
             
         case .coupon:
-            return baseBannerHeight * 0.8
+            return baseBannerHeight
+            
+        case .brandSale:
+            return baseBannerHeight * 1.25
         }
     }
 }
